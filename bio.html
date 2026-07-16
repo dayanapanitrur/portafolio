@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biografía | Portafolio Experimental</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        offwhite: '#f5f5f7',
+                        chrome: '#e5e7eb',
+                        chromeDark: '#9ca3af',
+                        accentLight: '#BED5ED', /* Celeste claro */
+                        accentDark: '#1d4ed8',  /* Azul cobalto */
+                    },
+                    fontFamily: {
+                        sans: ['"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilos base */
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            background-color: #f5f5f7;
+            color: #171717;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            opacity: 0; /* Para el fade-in inicial */
+            animation: fadeIn 0.8s ease-in forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Fondo Líquido Animado */
+        .liquid-background {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            background: linear-gradient(135deg, #f5f5f7 0%, #BED5ED 30%, #e5e7eb 60%, #1d4ed8 100%);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            opacity: 0.4;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Efecto Cromado Líquido para Textos */
+        .chrome-liquid-text {
+            background: linear-gradient(to bottom, #ffffff, #BED5ED, #9ca3af, #1d4ed8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 2px 10px rgba(29, 78, 216, 0.2);
+        }
+
+        /* ----- EFECTO AGUA / BURBUJAS ----- */
+        @keyframes waterFluid {
+            0% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+            34% { border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%; }
+            67% { border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%; }
+            100% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+        }
+
+        .water-panel {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 
+                inset 0 0 20px rgba(190, 213, 237, 0.5), /* Reflejo celeste interno */
+                inset 10px 0 40px rgba(255, 255, 255, 0.8), /* Luz izquierda */
+                10px 10px 30px rgba(29, 78, 216, 0.15); /* Sombra cobalto suave */
+            animation: waterFluid 8s ease-in-out infinite;
+            transition: transform 0.4s ease, backdrop-filter 0.4s ease;
+        }
+
+        .water-panel:hover {
+            transform: scale(1.02) translateY(-5px);
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                inset 0 0 30px rgba(190, 213, 237, 0.8),
+                10px 20px 40px rgba(29, 78, 216, 0.2);
+        }
+
+        /* Variación de animación para desincronizar las gotas */
+        .water-delay-1 { animation-delay: -2s; animation-duration: 10s; }
+        .water-delay-2 { animation-delay: -4s; animation-duration: 12s; }
+        .water-delay-3 { animation-delay: -6s; animation-duration: 9s; }
+
+        /* Menú de navegación flotante orgánico */
+        .nav-pill {
+            background: rgba(245, 245, 247, 0.6);
+            backdrop-filter: blur(15px);
+            border-radius: 50px;
+            border: 1px solid rgba(190, 213, 237, 0.4);
+            box-shadow: 0 10px 30px rgba(29, 78, 216, 0.1);
+        }
+
+        .nav-link {
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 50%;
+            width: 4px; height: 4px;
+            background: #1d4ed8;
+            border-radius: 50%;
+            transform: translateX(-50%) scale(0);
+            transition: transform 0.3s ease;
+        }
+        .nav-link:hover, .nav-link.active-nav {
+            color: #1d4ed8;
+        }
+        .nav-link.active-nav::after {
+            transform: translateX(-50%) scale(1);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+
+    <!-- Fondo Líquido -->
+    <div class="liquid-background"></div>
+
+    <!-- Navegación Flotante -->
+    <!-- Se actualiza para redirigir a archivos separados -->
+    <nav class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 nav-pill py-3 px-8 flex justify-center items-center gap-8 text-sm font-bold tracking-widest uppercase">
+        <button onclick="navigateWithSound('index.html')" class="interactive nav-link text-gray-500 hover:text-accentDark">00</button>
+        <button class="interactive nav-link text-accentDark active-nav">Bio</button> <!-- Activo -->
+        <button onclick="navigateWithSound('proyectos.html')" class="interactive nav-link text-gray-500 hover:text-accentDark">Proyectos</button>
+        <button onclick="navigateWithSound('contacto.html')" class="interactive nav-link text-gray-500 hover:text-accentDark">Contacto</button>
+    </nav>
+
+    <!-- Contenedor principal -->
+    <main class="flex-grow pt-32 pb-20 px-6 md:px-12 max-w-7xl mx-auto w-full flex flex-col relative z-10">
+
+        <!-- Título de Página -->
+        <div class="mb-16 md:mb-24 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold text-accentDark uppercase tracking-tighter mix-blend-multiply">
+                Perfil <span class="chrome-liquid-text">Fluido</span>
+            </h1>
+        </div>
+
+        <!-- SECCIÓN BIOGRAFÍA PRINCIPAL -->
+        <section class="flex flex-col md:flex-row gap-16 items-center mb-32">
+            <!-- Burbuja de Foto/Avatar -->
+            <div class="w-full md:w-1/2 flex justify-center">
+                <div class="water-panel aspect-square w-full max-w-md flex items-center justify-center relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-accentLight mix-blend-overlay opacity-30 transition-opacity duration-500 group-hover:opacity-60"></div>
+                    <!-- Aquí podrías poner una etiqueta img en el futuro. Por ahora es un placeholder artístico -->
+                    <div class="text-center relative z-10">
+                        <p class="text-accentDark text-lg tracking-widest uppercase font-bold">[Avatar]</p>
+                        <p class="text-xs text-gray-500 mt-2 tracking-widest">Inserta tu imagen aquí</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contenido Bio -->
+            <div class="w-full md:w-1/2 relative">
+                <!-- Mancha decorativa trasera -->
+                <div class="water-panel water-delay-3 absolute -right-10 -top-10 w-40 h-40 -z-10 opacity-30 blur-lg"></div>
+
+                <h3 class="text-accentLight text-sm tracking-widest uppercase mb-4 font-bold">Orígenes & Filosofía</h3>
+                <h2 class="text-4xl md:text-5xl font-bold mb-8 text-accentDark leading-tight tracking-tighter">
+                    Diseño como un elemento líquido.
+                </h2>
+                <div class="space-y-6 text-gray-700 text-lg mix-blend-multiply font-light leading-relaxed">
+                    <p>
+                        Exploro la intersección entre la tecnología cromada y las formas orgánicas. 
+                        Mi enfoque rompe la grilla corporativa para crear interfaces que se adaptan, mutan y fluyen según el usuario.
+                    </p>
+                    <p>
+                        Creo firmemente que el diseño no debe ser una estructura rígida, sino un ecosistema visual. Utilizando el cobalto profundo y el espacio negativo (blanco roto) como herramientas principales, busco generar emociones sutiles a través de transparencias y movimientos que emulan el agua.
+                    </p>
+                </div>
+                
+                <div class="flex flex-wrap gap-4 mt-12">
+                    <span class="water-panel water-delay-1 px-6 py-3 text-xs font-bold text-accentDark uppercase tracking-widest">Figma</span>
+                    <span class="water-panel water-delay-2 px-6 py-3 text-xs font-bold text-accentDark uppercase tracking-widest">Illustrator</span>
+                    <span class="water-panel water-delay-3 px-6 py-3 text-xs font-bold text-accentDark uppercase tracking-widest">Photoshop</span>
+                    <span class="water-panel px-6 py-3 text-xs font-bold text-accentDark uppercase tracking-widest">UI / UX</span>
+                    <span class="water-panel water-delay-1 px-6 py-3 text-xs font-bold text-accentDark uppercase tracking-widest">Web Design</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN TRAYECTORIA / SKILLS -->
+        <section class="max-w-4xl mx-auto w-full">
+            <h3 class="text-2xl font-bold mb-10 text-accentDark uppercase tracking-tighter text-center">Trayectoria</h3>
+            
+            <div class="flex flex-col gap-6">
+                <!-- Experiencia 1 -->
+                <div class="water-panel p-8 flex flex-col md:flex-row md:items-center justify-between gap-4 interactive hover:bg-white/30 transition-colors">
+                    <div>
+                        <h4 class="text-xl font-bold text-accentDark uppercase">Diseñador UI/UX Senior</h4>
+                        <p class="text-gray-600 mt-1">Estudio Creativo Cromático</p>
+                    </div>
+                    <div class="text-left md:text-right">
+                        <span class="text-accentLight font-bold tracking-widest text-sm uppercase">2021 - Presente</span>
+                    </div>
+                </div>
+
+                <!-- Experiencia 2 -->
+                <div class="water-panel water-delay-2 p-8 flex flex-col md:flex-row md:items-center justify-between gap-4 interactive hover:bg-white/30 transition-colors">
+                    <div>
+                        <h4 class="text-xl font-bold text-accentDark uppercase">Director de Arte Digital</h4>
+                        <p class="text-gray-600 mt-1">Agencia Flujo Visual</p>
+                    </div>
+                    <div class="text-left md:text-right">
+                        <span class="text-accentLight font-bold tracking-widest text-sm uppercase">2018 - 2021</span>
+                    </div>
+                </div>
+
+                <!-- Experiencia 3 -->
+                <div class="water-panel water-delay-1 p-8 flex flex-col md:flex-row md:items-center justify-between gap-4 interactive hover:bg-white/30 transition-colors">
+                    <div>
+                        <h4 class="text-xl font-bold text-accentDark uppercase">Diseñador Gráfico Jr.</h4>
+                        <p class="text-gray-600 mt-1">Freelance / Proyectos Independientes</p>
+                    </div>
+                    <div class="text-left md:text-right">
+                        <span class="text-accentLight font-bold tracking-widest text-sm uppercase">2016 - 2018</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // --- SISTEMA DE SONIDO LOCAL ---
+        // Se asume que la estructura es:
+        // bio.html
+        // assets/sonidos/click.mp3
+        const clickSound = new Audio('assets/sonidos/click.mp3');
+        clickSound.load(); 
+
+        function playLocalSound() {
+            clickSound.currentTime = 0; 
+            clickSound.play().catch(error => {
+                console.log("No se pudo reproducir el audio:", error);
+            });
+        }
+
+        // Asignar el sonido a elementos interactivos sin enlace
+        document.addEventListener('DOMContentLoaded', () => {
+            const interactives = document.querySelectorAll('.interactive:not(button[onclick])');
+            interactives.forEach(el => {
+                el.addEventListener('click', playLocalSound);
+            });
+        });
+
+        // Función para reproducir el sonido y luego navegar a otra página
+        function navigateWithSound(url) {
+            playLocalSound();
+            // Esperamos 300ms para que se escuche el sonido antes de cambiar de página
+            setTimeout(() => {
+                window.location.href = url;
+            }, 300);
+        }
+    </script>
+</body>
+</html>
