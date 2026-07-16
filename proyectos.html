@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archivo Líquido | Proyectos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        offwhite: '#f5f5f7',
+                        chrome: '#e5e7eb',
+                        chromeDark: '#9ca3af',
+                        accentLight: '#BED5ED', /* Celeste claro */
+                        accentDark: '#1d4ed8',  /* Azul cobalto */
+                    },
+                    fontFamily: {
+                        sans: ['"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilos base */
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            background-color: #f5f5f7;
+            color: #171717;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        /* Fondo Líquido Animado (consistente con el index) */
+        .liquid-background {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            background: linear-gradient(135deg, #f5f5f7 0%, #BED5ED 20%, #e5e7eb 80%, #1d4ed8 100%);
+            background-size: 400% 400%;
+            animation: gradientBG 20s ease infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Degradado Neutro/Color para tarjetas de proyecto */
+        .project-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.6) 0%, rgba(229,231,235,0.4) 40%, rgba(190,213,237,0.5) 70%, rgba(29,78,216,0.15) 100%);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 2rem;
+            box-shadow: 
+                inset 0 0 30px rgba(255, 255, 255, 0.5),
+                10px 15px 35px rgba(29, 78, 216, 0.1);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px) scale(1.01);
+            background: linear-gradient(145deg, rgba(255,255,255,0.8) 0%, rgba(190,213,237,0.7) 50%, rgba(29,78,216,0.3) 100%);
+            box-shadow: 
+                inset 0 0 40px rgba(255, 255, 255, 0.8),
+                15px 25px 45px rgba(29, 78, 216, 0.2);
+        }
+
+        /* Efecto de reveal en el hover para el título */
+        .project-title {
+            transition: color 0.5s ease, letter-spacing 0.5s ease;
+        }
+        .project-card:hover .project-title {
+            color: #1d4ed8;
+            letter-spacing: 0.05em;
+        }
+
+        /* Barra de navegación superior */
+        .top-nav {
+            background: rgba(245, 245, 247, 0.5);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(190, 213, 237, 0.3);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+
+    <!-- Fondo Líquido -->
+    <div class="liquid-background"></div>
+
+    <!-- Navegación Superior -->
+    <nav class="top-nav fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center">
+        <a href="index.html" class="interactive text-accentDark font-bold tracking-widest uppercase text-sm hover:text-accentLight transition-colors flex items-center gap-2">
+            ← Volver al Inicio
+        </a>
+        <span class="text-gray-400 font-bold tracking-[0.3em] uppercase text-xs">Archivo Líquido</span>
+    </nav>
+
+    <!-- Contenedor principal -->
+    <main class="flex-grow pt-32 pb-24 px-6 md:px-12 max-w-5xl mx-auto w-full relative z-10">
+
+        <header class="mb-20 text-center md:text-left">
+            <h1 class="text-6xl md:text-8xl font-bold text-accentDark uppercase tracking-tighter leading-none mb-6 mix-blend-multiply">
+                PROYECTOS<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-chromeDark to-accentLight">SELECCIONADOS</span>
+            </h1>
+            <p class="text-xl text-gray-600 max-w-2xl font-light">
+                Una colección de interfaces, sistemas visuales y exploraciones cromáticas desarrolladas en diferentes ecosistemas digitales.
+            </p>
+        </header>
+
+        <!-- Lista de Proyectos -->
+        <div class="flex flex-col gap-16">
+
+            <!-- Proyecto 01 -->
+            <article class="project-card interactive p-8 md:p-14 group cursor-pointer relative">
+                <!-- Metadatos del proyecto -->
+                <div class="flex flex-wrap justify-between items-end border-b border-accentLight/40 pb-6 mb-8 gap-4">
+                    <div class="flex gap-8">
+                        <div>
+                            <span class="block text-xs text-gray-500 uppercase tracking-widest mb-1">Fecha</span>
+                            <span class="text-accentDark font-bold text-sm tracking-wider">MARZO 2024</span>
+                        </div>
+                        <div>
+                            <span class="block text-xs text-gray-500 uppercase tracking-widest mb-1">Cliente / Collab</span>
+                            <span class="text-accentDark font-bold text-sm tracking-wider">STUDIO NÓMADA</span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="px-4 py-1 rounded-full border border-accentDark text-accentDark text-xs font-bold uppercase tracking-widest group-hover:bg-accentDark group-hover:text-white transition-colors">
+                            Identidad / Web
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Contenido -->
+                <h2 class="project-title text-5xl md:text-7xl font-bold text-gray-800 uppercase leading-none mb-6">
+                    Cromática Agua
+                </h2>
+                <p class="text-gray-700 text-lg md:text-xl max-w-3xl mix-blend-multiply leading-relaxed">
+                    Desarrollo de una identidad visual basada en la refracción de luz y superficies líquidas. El objetivo fue crear una marca que se sintiera viva, utilizando el espacio negativo y transparencias dinámicas.
+                </p>
+
+                <!-- Elemento visual abstracto (Círculo difuminado) -->
+                <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-accentLight rounded-full blur-3xl opacity-0 group-hover:opacity-50 transition-opacity duration-700 pointer-events-none"></div>
+            </article>
+
+            <!-- Proyecto 02 -->
+            <article class="project-card interactive p-8 md:p-14 group cursor-pointer relative">
+                <!-- Metadatos del proyecto -->
+                <div class="flex flex-wrap justify-between items-end border-b border-accentLight/40 pb-6 mb-8 gap-4">
+                    <div class="flex gap-8">
+                        <div>
+                            <span class="block text-xs text-gray-500 uppercase tracking-widest mb-1">Fecha</span>
+                            <span class="text-accentDark font-bold text-sm tracking-wider">OCTUBRE 2023</span>
+                        </div>
+                        <div>
+                            <span class="block text-xs text-gray-500 uppercase tracking-widest mb-1">Cliente / Collab</span>
+                            <span class="text-accentDark font-bold text-sm tracking-wider">TECH LABS INC.</span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="px-4 py-1 rounded-full border border-accentDark text-accentDark text-xs font-bold uppercase tracking-widest group-hover:bg-accentDark group-hover:text-white transition-colors">
+                            UI / UX Design
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Contenido -->
+                <h2 class="project-title text-5xl md:text-7xl font-bold text-gray-800 uppercase leading-none mb-6">
+                    Ecosistema Azul
+                </h2>
+                <p class="text-gray-700 text-lg md:text-xl max-w-3xl mix-blend-multiply leading-relaxed">
+                    Diseño de interfaz para una aplicación móvil con micro-interacciones que simulan la física de fluidos. Se priorizó una paleta monocromática de azules cobalto para generar profundidad sin sobrecargar cognitivamente al usuario.
+                </p>
+
+                <div class="absolute -left-20 -top-20 w-64 h-64 bg-accentDark rounded-full blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none"></div>
+            </article>
+
+            <!-- Proyecto 03 -->
+            <article class="project-card interactive p-8 md:p-14 group cursor-pointer relative">
+                <!-- Metadatos del proyecto -->
+                <div class="flex flex-wrap justify-between items-end border-b border-accentLight/40 pb-6 mb-8 gap-4">
+                    <div class="flex gap-8">
+                        <div>
+                            <span class="block text-xs text-gray-500 uppercase tracking-widest mb-1">Fecha</span>
+                            <span class="text-accentDark font-bold text-sm tracking-wider">ENERO 2023</span>
+                        </div>
+                        <div>
+                            <span class="block text-xs text-gray-500 uppercase tracking-widest mb-1">Cliente / Collab</span>
+                            <span class="text-accentDark font-bold text-sm tracking-wider">PROYECTO PERSONAL</span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="px-4 py-1 rounded-full border border-accentDark text-accentDark text-xs font-bold uppercase tracking-widest group-hover:bg-accentDark group-hover:text-white transition-colors">
+                            Dirección de Arte
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Contenido -->
+                <h2 class="project-title text-5xl md:text-7xl font-bold text-gray-800 uppercase leading-none mb-6">
+                    Gravedad Cero
+                </h2>
+                <p class="text-gray-700 text-lg md:text-xl max-w-3xl mix-blend-multiply leading-relaxed">
+                    Exploración visual sobre la ausencia de peso en entornos digitales. Uso intensivo de cromados, grises neutros y tipografía helvética distorsionada para generar una estética futurista pero elegante.
+                </p>
+
+                <div class="absolute right-10 top-10 w-40 h-40 bg-white rounded-full blur-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-700 pointer-events-none"></div>
+            </article>
+
+        </div>
+    </main>
+
+    <!-- Footer minimalista -->
+    <footer class="py-12 text-center text-xs font-bold tracking-widest uppercase text-gray-400">
+        <p>© 2024 PORTAFOLIO EXPERIMENTAL</p>
+    </footer>
+
+    <script>
+        // --- SISTEMA DE SONIDO LOCAL ---
+        // IMPORTANTE: Requiere la misma estructura de carpetas que el index.html
+        // assets/sonidos/click.mp3
+        const clickSound = new Audio('assets/sonidos/click.mp3');
+        clickSound.load(); 
+
+        function playLocalSound() {
+            clickSound.currentTime = 0; 
+            clickSound.play().catch(error => {
+                console.log("Audio bloqueado temporalmente por el navegador:", error);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const interactives = document.querySelectorAll('.interactive');
+            interactives.forEach(el => {
+                el.addEventListener('click', (e) => {
+                    // Si es un enlace, permite que el sonido suene antes de cambiar de página (opcional)
+                    playLocalSound();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
