@@ -55,7 +55,7 @@
             font-size: clamp(3rem, 10vw, 8rem);
             line-height: 0.9;
             letter-spacing: -0.05em;
-            color: #1d4ed8; /* Azul cobalto */
+            color: #1d4ed8;
             mix-blend-mode: multiply;
         }
 
@@ -81,9 +81,9 @@
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.5);
             box-shadow: 
-                inset 0 0 20px rgba(190, 213, 237, 0.5), /* Reflejo celeste interno */
-                inset 10px 0 40px rgba(255, 255, 255, 0.8), /* Luz izquierda */
-                10px 10px 30px rgba(29, 78, 216, 0.15); /* Sombra cobalto suave */
+                inset 0 0 20px rgba(190, 213, 237, 0.5),
+                inset 10px 0 40px rgba(255, 255, 255, 0.8),
+                10px 10px 30px rgba(29, 78, 216, 0.15);
             animation: waterFluid 8s ease-in-out infinite;
             transition: transform 0.4s ease, backdrop-filter 0.4s ease;
         }
@@ -96,7 +96,6 @@
                 10px 20px 40px rgba(29, 78, 216, 0.2);
         }
 
-        /* Variación de animación para desincronizar las gotas */
         .water-delay-1 { animation-delay: -2s; animation-duration: 10s; }
         .water-delay-2 { animation-delay: -4s; animation-duration: 12s; }
         .water-delay-3 { animation-delay: -6s; animation-duration: 9s; }
@@ -152,8 +151,8 @@
 
     <!-- Navegación Flotante -->
     <nav class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 nav-pill py-3 px-8 flex justify-center items-center gap-8 text-sm font-bold tracking-widest uppercase">
-        <button onclick="showSection('inicio')" class="interactive nav-link text-gray-500 hover:text-accentDark">00</button>
-        <button onclick="showSection('biografia')" id="nav-biografia" class="interactive nav-link text-gray-500">Bio</button>
+        <button onclick="showSection('inicio')" class="interactive nav-link text-gray-500 hover:text-accentDark active-nav">00</button>
+        <button onclick="setTimeout(() => window.location.href='bio.html', 200)" id="nav-biografia" class="interactive nav-link text-gray-500">Bio</button>
         <button onclick="setTimeout(() => window.location.href='proyectos.html', 200)" id="nav-proyectos" class="interactive nav-link text-gray-500">Proyectos</button>
         <button onclick="showSection('contacto')" id="nav-contacto" class="interactive nav-link text-gray-500">Contacto</button>
     </nav>
@@ -176,37 +175,6 @@
             <button onclick="setTimeout(() => window.location.href='proyectos.html', 200)" class="interactive water-panel px-10 py-6 text-accentDark font-bold tracking-widest uppercase hover:text-white hover:bg-accentDark transition-all duration-500">
                 Sumergirse →
             </button>
-        </section>
-
-        <!-- SECCIÓN BIOGRAFÍA -->
-        <section id="biografia" class="section-content">
-            <div class="flex flex-col md:flex-row gap-16 items-center">
-                <!-- Burbuja de Foto/Avatar -->
-                <div class="w-full md:w-1/2 flex justify-center">
-                    <div class="water-panel aspect-square w-3/4 flex items-center justify-center relative overflow-hidden">
-                        <div class="absolute inset-0 bg-accentLight mix-blend-overlay opacity-30"></div>
-                        <p class="text-accentDark text-sm tracking-widest uppercase font-bold relative z-10">[Avatar Fluid]</p>
-                    </div>
-                </div>
-                
-                <!-- Contenido Bio -->
-                <div class="w-full md:w-1/2">
-                    <h3 class="text-accentLight text-sm tracking-widest uppercase mb-4 font-bold">Orígenes</h3>
-                    <h2 class="text-5xl font-bold mb-8 text-accentDark leading-tight tracking-tighter">
-                        Diseño como un elemento líquido.
-                    </h2>
-                    <p class="text-gray-700 mb-8 leading-relaxed text-lg mix-blend-multiply">
-                        Exploro la intersección entre la tecnología cromada y las formas orgánicas. 
-                        Mi enfoque rompe la grilla corporativa para crear interfaces que se adaptan, mutan y fluyen según el usuario, utilizando el cobalto y el espacio negativo como herramientas principales.
-                    </p>
-                    
-                    <div class="flex flex-wrap gap-4 mt-12">
-                        <span class="water-panel water-delay-1 px-6 py-3 text-xs font-bold text-accentDark uppercase tracking-widest">Figma</span>
-                        <span class="water-panel water-delay-2 px-6 py-3 text-xs font-bold text-accentDark uppercase tracking-widest">Creative Cloud</span>
-                        <span class="water-panel water-delay-3 px-6 py-3 text-xs font-bold text-accentDark uppercase tracking-widest">UI / UX</span>
-                    </div>
-                </div>
-            </div>
         </section>
 
         <!-- SECCIÓN CONTACTO -->
@@ -239,7 +207,7 @@
     </main>
 
     <script>
-        // Lógica SPA con transiciones suaves
+        // Lógica SPA para moverse entre Inicio y Contacto dentro del mismo archivo
         function showSection(sectionId) {
             document.querySelectorAll('.section-content').forEach(el => {
                 el.classList.remove('active');
@@ -256,37 +224,30 @@
             if(targetSection) {
                 setTimeout(() => {
                     targetSection.style.display = 'block';
-                    // Timeout para activar CSS transition
                     setTimeout(() => targetSection.classList.add('active'), 20);
                 }, 600);
             }
 
-            const activeNav = document.getElementById(`nav-${sectionId}`);
-            if(activeNav) {
-                activeNav.classList.add('active-nav');
+            // Activar el link de inicio (00) o contacto según corresponda
+            const allNavLinks = document.querySelectorAll('.nav-link');
+            if(sectionId === 'inicio') {
+                allNavLinks[0].classList.add('active-nav');
+            } else if (sectionId === 'contacto') {
+                allNavLinks[3].classList.add('active-nav');
             }
         }
 
         // --- SISTEMA DE SONIDO LOCAL ---
-        // IMPORTANTE: Asegúrate de que la estructura de carpetas exista:
-        // index.html
-        // assets/
-        // └── sonidos/
-        //     └── click.mp3
         const clickSound = new Audio('assets/sonidos/click.mp3');
-        // Pre-cargar el audio
         clickSound.load(); 
 
         function playLocalSound() {
-            // Reiniciar el audio al principio por si se hacen clics rápidos
             clickSound.currentTime = 0; 
-            // Reproducir. El catch evita errores en la consola si el navegador bloquea el autoplay inicial
             clickSound.play().catch(error => {
                 console.log("Esperando interacción del usuario para reproducir audio:", error);
             });
         }
 
-        // Asignar el sonido a todos los elementos interactivos
         document.addEventListener('DOMContentLoaded', () => {
             const interactives = document.querySelectorAll('.interactive');
             interactives.forEach(el => {
