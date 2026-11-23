@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Generar GLB</title>
+  <script type="importmap">
+    { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    } }
+  </script>
+  <style>body{font:14px/1.5 system-ui;margin:32px;background:#f5f4f0;color:#111}</style>
+</head>
+<body>
+  <h1>Generar cd-case.glb</h1>
+  <p id="out">Generando…</p>
+  <script type="module">
+    import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
+    import { buildCDCase } from '../src/cd-case-model.js';
+
+    const out = document.getElementById('out');
+    try {
+      const { root, clip } = buildCDCase({ maxAngleDeg: 28 });
+      const glb = await new GLTFExporter().parseAsync(root, { binary: true, animations: [clip] });
+      const res = await fetch('/save?name=cd-case.glb', { method: 'POST', body: glb });
+      out.textContent = await res.text();
+      window.__done = true;
+    } catch (e) {
+      out.textContent = 'Error: ' + e.message;
+      console.error(e);
+      window.__done = e.message;
+    }
+  </script>
+</body>
+</html>

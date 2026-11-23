@@ -1,0 +1,350 @@
+/* ==========================================
+   PÁGINA DE PROYECTO
+   Se carga después de ../style-v01.css, así que usa sus colores,
+   la tipografía y el header.
+   ========================================== */
+
+/* Tonos de gris de las portadas (los mismos del carrusel) */
+:root {
+  --tono-1: #C7C6C1;
+  --tono-2: #E3E2DE;
+  --tono-3: #CFCFCB;
+  --tono-4: #D9D8D3;
+  --tono-5: #D2D1CC;
+  --tono-6: #DCDCD8;
+}
+
+/* ==========================================
+   ENCABEZADO AZUL
+   Continúa el azul del header, como la portada del inicio pero más bajo.
+   El relleno de abajo deja espacio para que la tarjeta gris se suba encima
+   ========================================== */
+.proyecto-titulo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 5rem 1.5rem 6.5rem;
+  background-color: var(--azul-electrico);
+  color: var(--blanco-roto);
+  text-align: center;
+}
+
+/* "proyecto 01 / 12": mono pequeña, como una etiqueta de disco */
+.proyecto-titulo__numero {
+  margin: 0;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+  font-size: 0.875rem;
+  letter-spacing: 0.08rem;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+/* Nombre del proyecto: Pixelify Sans, la misma del logo */
+.proyecto-titulo__nombre {
+  margin: 0;
+  font-family: "Pixelify Sans", sans-serif;
+  font-weight: 400;
+  font-size: 5rem;
+  line-height: 1;
+}
+
+/* ==========================================
+   TARJETA DEL PROYECTO
+   Mismo estilo que "sobre mí": se sube sobre el azul,
+   esquinas de arriba más redondas y degradado gris → blanco
+   ========================================== */
+.proyecto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem;
+  margin-top: -2.6875rem;
+  padding: 3.5rem 0 4rem;
+  border-radius: 3.125rem 3.125rem 1.25rem 1.25rem;
+  background: linear-gradient(to bottom, var(--gris-claro), #FFFFFF);
+}
+
+/* Fila: portada a la izquierda, información a la derecha.
+   Mismo ancho que la escena de "sobre mí" (82%, máximo 1055 px) */
+.proyecto__cabecera {
+  display: flex;
+  align-items: flex-start;
+  gap: 4rem;
+  width: 82%;
+  max-width: 65.9375rem;
+}
+
+/* Portada con la proporción de las portadas del carrusel (275 × 371) */
+.proyecto__portada {
+  flex: none;
+  width: 22rem;
+  aspect-ratio: 275 / 371;
+  object-fit: cover;
+  background-color: var(--tono);
+  box-shadow: 0 1.125rem 2.5rem rgba(0, 0, 0, 0.14);
+}
+
+/* Columna de la derecha: ficha arriba, descripción abajo */
+.proyecto__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  flex: 1;
+}
+
+/* --- Ficha técnica --- */
+.ficha {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  border-top: 0.0625rem solid var(--negro);
+}
+
+/* Cada fila: etiqueta a la izquierda, dato a la derecha, con una línea abajo */
+.ficha__fila {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0.875rem 0;
+  border-bottom: 0.0625rem solid rgba(26, 26, 26, 0.2);
+}
+
+.ficha dt {
+  color: var(--gris-topo);
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+  font-size: 0.8125rem;
+  letter-spacing: 0.045rem;
+  text-transform: uppercase;
+}
+
+.ficha dd {
+  margin: 0;
+  font-weight: 500;
+  font-size: 1rem;
+  text-align: right;
+}
+
+/* --- Descripción --- */
+.proyecto__descripcion {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  font-weight: 400;
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+.proyecto__descripcion p {
+  margin: 0;
+}
+
+/* ==========================================
+   GALERÍA
+   Tres columnas en desktop; se adapta sola al ancho disponible
+   ========================================== */
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1.5rem;
+  width: 82%;
+  max-width: 65.9375rem;
+}
+
+.galeria__item {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background-color: var(--tono);
+}
+
+/* ==========================================
+   PLACEHOLDER (recuadro gris con ícono, igual que en el carrusel)
+   Desaparece solo cuando pones una imagen en generar-proyectos.js
+   ========================================== */
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  border: 0.0625rem solid rgba(255, 255, 255, 0.75);
+}
+
+.placeholder__icono {
+  width: 1.75rem;
+  height: 1.4rem;
+  border: 0.09rem solid var(--gris-topo);
+  border-radius: 0.15rem;
+}
+
+.placeholder__texto {
+  color: var(--gris-topo);
+  font-weight: 300;
+  font-size: 0.875rem;
+}
+
+/* ==========================================
+   NAVEGACIÓN ENTRE PROYECTOS
+   anterior · todos los proyectos · siguiente
+   ========================================== */
+.proyecto-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  width: 82%;
+  max-width: 65.9375rem;
+  margin: 0 auto;
+  padding: 2.5rem 0 4rem;
+  border-top: 0.0625rem solid rgba(26, 26, 26, 0.2);
+}
+
+.proyecto-nav a {
+  color: var(--negro);
+  text-decoration: none;
+}
+
+.proyecto-nav__enlace {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  font-weight: 500;
+  font-size: 1.125rem;
+}
+
+.proyecto-nav__enlace--siguiente {
+  justify-content: flex-end;
+}
+
+/* La flecha se corre un poco al pasar el cursor */
+.proyecto-nav__flecha {
+  transition: transform 0.3s ease;
+}
+
+.proyecto-nav__enlace:hover .proyecto-nav__flecha {
+  transform: translateX(-0.25rem);
+}
+
+.proyecto-nav__enlace--siguiente:hover .proyecto-nav__flecha {
+  transform: translateX(0.25rem);
+}
+
+/* "todos los proyectos": botón azul redondeado */
+.proyecto-nav .proyecto-nav__volver {
+  padding: 0.625rem 1.25rem;
+  border-radius: 62.5rem;
+  background-color: var(--azul-electrico);
+  color: var(--blanco-roto);
+  font-weight: 500;
+  font-size: 0.9375rem;
+  white-space: nowrap;
+}
+
+/* Foco visible para teclado */
+.proyecto-nav a:focus-visible {
+  outline: 0.125rem solid var(--azul-electrico);
+  outline-offset: 0.25rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proyecto-nav__flecha {
+    transition: none;
+  }
+}
+
+/* ==========================================
+   TABLET (1024 px = 64rem o menos)
+   ========================================== */
+@media (max-width: 64rem) {
+
+  .proyecto-titulo__nombre {
+    font-size: 3.75rem;
+  }
+
+  .proyecto__cabecera,
+  .galeria,
+  .proyecto-nav {
+    width: 92%;
+  }
+
+  .proyecto__cabecera {
+    gap: 2.5rem;
+  }
+
+  .proyecto__portada {
+    width: 16rem;
+  }
+
+  .proyecto__descripcion {
+    font-size: 1.0625rem;
+  }
+}
+
+/* ==========================================
+   MOBILE (768 px = 48rem o menos)
+   La portada pasa arriba y la información abajo
+   ========================================== */
+@media (max-width: 48rem) {
+
+  .proyecto-titulo {
+    padding: 3rem 1.25rem 4.5rem;
+  }
+
+  .proyecto-titulo__nombre {
+    font-size: 2.5rem;
+  }
+
+  .proyecto {
+    gap: 2.5rem;
+    margin-top: -1.5rem;
+    padding: 2rem 0 2.5rem;
+    border-radius: 1.75rem 1.75rem 1rem 1rem;
+  }
+
+  .proyecto__cabecera {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    width: 88%;
+  }
+
+  .proyecto__portada {
+    width: 70%;
+    max-width: 16rem;
+  }
+
+  .proyecto__info {
+    width: 100%;
+  }
+
+  .proyecto__descripcion {
+    font-size: 1rem;
+  }
+
+  .galeria {
+    width: 88%;
+    gap: 1rem;
+  }
+
+  /* Anterior y siguiente arriba, "todos los proyectos" abajo */
+  .proyecto-nav {
+    flex-wrap: wrap;
+    width: 88%;
+    padding: 2rem 0 3rem;
+  }
+
+  /* Cada enlace ocupa casi media fila, así "todos los proyectos" baja a la siguiente */
+  .proyecto-nav__enlace {
+    flex: 1 1 40%;
+    font-size: 0.9375rem;
+  }
+
+  .proyecto-nav .proyecto-nav__volver {
+    order: 3;
+    margin: 0.5rem auto 0;
+  }
+}

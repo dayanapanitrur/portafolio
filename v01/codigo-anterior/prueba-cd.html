@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prueba CD 3D — sobre mí</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Estilos solo de esta prueba; después pasan a style.css */
+    .sobre-mi__escena {
+      width: 100%;
+      height: 100svh;
+      outline: none;
+    }
+    .sobre-mi__escena:focus-visible {
+      outline: 2px solid var(--azul-electrico);
+      outline-offset: -4px;
+    }
+    .sobre-mi__escena canvas {
+      display: block;
+    }
+    /* Oculta el texto a la vista pero lo deja para lectores de pantalla */
+    .solo-lectores {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  </style>
+  <!-- Le dice al navegador de dónde sacar three.js -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+
+  <section class="sobre-mi" id="sobre-mi">
+    <h2 class="solo-lectores">Sobre mí</h2>
+    <!-- El texto real, para lectores de pantalla y buscadores (el de la portada es una imagen) -->
+    <p class="solo-lectores">
+      Soy Dayana Pañitrur, diseñadora. Este texto es de prueba.
+    </p>
+    <div id="escena-cd" class="sobre-mi__escena" tabindex="0"
+         aria-label="CD con mi foto: pasa el cursor sobre el case para sacarlo"></div>
+  </section>
+
+  <script type="module" src="cd.js"></script>
+</body>
+</html>

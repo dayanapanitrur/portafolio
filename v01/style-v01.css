@@ -1,0 +1,604 @@
+/* ==========================================
+  Colores
+   ========================================== */
+:root {
+  --blanco-roto: #FFFEFC;   /* color de fondo general y del texto sobre azul */
+  --gris-claro: #E5E5E5;    /* superficies y placeholders */
+  --gris-topo: #73716B;     /* texto secundario */
+  --verde-salvia: #AAC49E;  /* acento secundario */
+  --negro: #1A1A1A;         /* texto principal */
+  --azul-electrico: #142BFF;/* acento principal y fondo de la portada */
+}
+
+/* ==========================================
+   BASE
+   ========================================== */
+
+/* Hace que el ancho y alto de cada elemento incluyan su borde y relleno,
+   así las medidas no se descuadran */
+* {
+  box-sizing: border-box;
+}
+
+/* Quita el margen que el navegador pone por defecto alrededor de la página,
+   define la tipografía y los colores base */
+body {
+  margin: 0;
+  font-family: "Lexend", sans-serif;
+  background-color: var(--blanco-roto);
+  color: var(--negro);
+}
+
+/* ==========================================
+   Header
+   ========================================== */
+
+/* Pinta el header del mismo azul que la portada para que se vean como un solo bloque
+   y deja espacio arriba (70 px = 4.375rem) como en Figma */
+.header {
+  background-color: var(--azul-electrico);
+  padding-top: 4.375rem;
+}
+
+/* Centra el menú horizontalmente dentro del header */
+.nav {
+  display: flex;
+  justify-content: center;
+}
+
+/* Pone los 3 enlaces en una fila, separados de forma pareja.
+   El ancho es el del menú en Figma (552 px = 34.5rem), sin pasarse del 100% de la pantalla.
+   También quita los puntos y márgenes que traen las listas por defecto */
+.nav__lista {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 34.5rem;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Estilo de los enlaces del menú: blanco roto, Lexend Medium a 24 px (1.5rem)
+   y sin el subrayado que traen los enlaces por defecto */
+.nav__lista a {
+  color: var(--blanco-roto);
+  font-weight: 500;
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+/* ==========================================
+   PORTADA
+   ========================================== */
+
+/* Bloque azul que ocupa todo el ancho.
+   Su alto completa los 831 px del diseño (831 − 110 del header = 721 px = 45.0625rem).
+   Flexbox centra el logo en ambas direcciones.
+   El relleno de abajo (110 px = 6.875rem) compensa el header,
+   así el logo queda al centro del bloque azul completo */
+.portada {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 45.0625rem;
+  padding-bottom: 6.875rem;
+  background-color: var(--azul-electrico);
+}
+
+/* El logo: apila las dos líneas una bajo la otra, en blanco roto,
+   con la tipografía pixelada a 128 px (8rem) y sin el margen por defecto del título */
+.portada__titulo {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  color: var(--blanco-roto);
+  font-family: "Pixelify Sans", sans-serif;
+  font-weight: 400;
+  font-size: 8rem;
+  line-height: 1;
+}
+
+/* Cada línea del logo ("dayana" y "pañitrur") se comporta como una fila */
+.logo__linea {
+  display: flex;
+  align-items: baseline;
+}
+
+/* Corre la segunda línea un poco a la derecha, como en el diseño */
+.logo__linea--segunda {
+  padding-left: 2rem;
+}
+
+/* La "d" y la "p": tipografía Baskervville cursiva, un poco más grande (132 px = 8.25rem) */
+.logo__serif {
+  font-family: "Baskervville", serif;
+  font-style: italic;
+  font-size: 8.25rem;
+}
+
+/* ==========================================
+   SOBRE MÍ
+   ========================================== */
+
+/* Tarjeta gris que se monta sobre el azul de la portada.
+   - margin-top negativo (43 px = 2.6875rem): se sube sobre la portada como en Figma
+   - esquinas de arriba más redondas (50 px = 3.125rem) que las de abajo (20 px = 1.25rem)
+   - degradado de gris claro a blanco
+   - flexbox centra la escena horizontalmente */
+.sobre-mi {
+  display: flex;
+  justify-content: center;
+  margin-top: -2.6875rem;
+  padding: 1.4375rem 0 1.75rem;
+  border-radius: 3.125rem 3.125rem 1.25rem 1.25rem;
+  background: linear-gradient(to bottom, var(--gris-claro), #FFFFFF);
+}
+
+/* Contenedor de la imagen: 1055 de 1280 px de ancho (82%),
+   sin pasar de 1055 px (65.9375rem) en pantallas muy grandes */
+.sobre-mi__escena {
+  display: flex;
+  width: 82%;
+  max-width: 65.9375rem;
+  padding: 0.625rem;
+}
+
+/* Escenario del modelo 3D.
+   aspect-ratio mantiene la proporción del diseño (928 × 598) en cualquier pantalla.
+   position: relative para que el modelo (.sobre-mi__modelo) se ubique encima, ocupándolo entero.
+   Es una fila flex: si el 3D no carga, a la izquierda va la carcasa y a la derecha el cd */
+.sobre-mi__disco {
+  position: relative;
+  display: flex;
+  width: 100%;
+  aspect-ratio: 928 / 598;
+}
+
+/* Contenedor donde script-v01.js dibuja el modelo 3D (un <canvas>).
+   Ocupa todo el escenario. Mientras no carga, no se ve ni bloquea clics */
+.sobre-mi__modelo {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
+/* Cuando el modelo terminó de cargar (script-v01.js agrega .sobre-mi--3d-listo),
+   aparece suavemente y se puede usar con el mouse */
+.sobre-mi--3d-listo .sobre-mi__modelo {
+  opacity: 1;
+  pointer-events: auto;
+  cursor: grab;
+}
+
+.sobre-mi--3d-listo .sobre-mi__modelo:active {
+  cursor: grabbing;
+}
+
+/* Con el 3D activo (script-v01.js agrega .sobre-mi--3d) los textos HTML se esconden
+   de la vista porque ya van impresos sobre el modelo,
+   pero los lectores de pantalla y buscadores los siguen leyendo */
+.sobre-mi--3d .sobre-mi__carcasa,
+.sobre-mi--3d .sobre-mi__cd {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Zona de la carcasa: ocupa el 58% izquierdo de la imagen.
+   El relleno izquierdo (9.6%) ubica el recuadro blanco donde está en Figma.
+   align-items: center lo deja centrado en vertical sobre la carcasa */
+.sobre-mi__carcasa {
+  display: flex;
+  align-items: center;
+  width: 58%;
+  padding-left: 9.6%;
+}
+
+/* Recuadro blanco semitransparente con el texto de presentación.
+   Mide 83% del ancho y 68.5% del alto de la carcasa (499 × 457 px en Figma).
+   Lexend Medium 24 px (1.5rem) */
+.sobre-mi__texto {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+  width: 83%;
+  height: 68.5%;
+  padding: 0.625rem 1.25rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #000000;
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+/* Quita los márgenes por defecto de los párrafos; la separación la da el gap */
+.sobre-mi__texto p,
+.sobre-mi__cd p {
+  margin: 0;
+}
+
+/* Zona del cd: toma el resto del ancho.
+   Columna flex: space-evenly reparte los dos textos arriba y abajo del agujero del cd */
+.sobre-mi__cd {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  flex: 1;
+  border-radius: 1.25rem;               /* respaldo sin 3D: un bloque azul donde va el cd */
+  background-color: var(--azul-electrico);
+}
+
+/* Textos sobre el cd: blanco roto, centrados, 64% del ancho de la zona (279 px en Figma) */
+.sobre-mi__cd p {
+  width: 64%;
+  color: var(--blanco-roto);
+  font-weight: 500;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+/* ==========================================
+   PROYECTOS
+   ========================================== */
+
+/* La sección se separa de "sobre mí" (99 px ≈ 6.1875rem) */
+.proyectos {
+  display: flex;
+  flex-direction: column;
+  padding-top: 6.1875rem;
+}
+
+/* Título "proyectos": Lexend SemiBold 40 px (2.5rem), a 54 px (3.375rem) del borde */
+.proyectos__titulo {
+  margin: 0 0 2.5rem;
+  padding-left: 3.375rem;
+  font-weight: 600;
+  font-size: 2.5rem;
+  color: #000000;
+}
+
+/* --- Carrusel ---
+   Las medidas del carrusel viven en variables para poder cambiarlas
+   en los media queries sin repetir todas las reglas:
+   --ancho / --alto : tamaño de cada portada (275 × 371 px)
+   --paso-x / --paso-y : cuánto se corre cada vinilo respecto al anterior (100 × 73 px)
+   --salida : cuánto sale el vinilo activo hacia la derecha (166 px)
+   --ajuste-x / --ajuste-y : corren la pila completa para encuadrarla como en Figma
+   --avance : lo controla script.js, va de 0 a 1 mientras la pila avanza un paso */
+.carrusel {
+  --ancho: 17.1875rem;
+  --alto: 23.1875rem;
+  --paso-x: 6.25rem;
+  --paso-y: 4.5625rem;
+  --salida: 10.375rem;
+  --ajuste-x: -22.375rem;
+  --ajuste-y: -20.875rem;
+  --foco-x: 0.45; /* punto de foco (de 0 a 1 del ancho): ahí sale el vinilo al detener el scroll */
+  --avance: 0;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  height: 50rem;
+  overflow: hidden;
+  background-color: var(--blanco-roto);
+}
+
+/* La pila: fila invertida, así el primer vinilo queda arriba a la derecha (al fondo)
+   y los siguientes avanzan hacia abajo a la izquierda (al frente).
+   El transform la desplaza en diagonal mientras se hace scroll */
+.carrusel__pila {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-start;
+  flex: none;
+  margin-right: var(--ajuste-x);
+  margin-top: var(--ajuste-y);
+  transform: translate(
+    calc(var(--avance) * var(--paso-x) * -1),
+    calc(var(--avance) * var(--paso-y))
+  );
+}
+
+/* Cada vinilo:
+   - margin-left negativo: se monta sobre el vecino dejando solo --paso-x a la vista
+   - margin-top: lo baja según su lugar en la pila (--i lo pone script.js)
+   - rotate + skewX: la inclinación casi isométrica del diseño */
+.vinilo {
+  display: flex;
+  flex: none;
+  width: var(--ancho);
+  margin-left: calc(var(--paso-x) - var(--ancho));
+  margin-top: calc(var(--i, 0) * var(--paso-y));
+  transform: rotate(11deg) skewX(11deg) scaleY(0.98);
+  outline: none;
+  cursor: pointer;
+}
+
+/* Lo que se mueve al activar: la portada y su nombre.
+   El vinilo en sí no se mueve, así el hover no parpadea */
+.vinilo__contenido {
+  display: flex;
+  align-items: center;
+  transition: transform 0.45s ease;
+}
+
+/* La portada: placeholder gris con ícono y la palabra "Portada".
+   Cuando tengas las imágenes, cambia el background por background-image */
+.vinilo__portada {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.375rem;
+  flex: none;
+  width: var(--ancho);
+  height: var(--alto);
+  border: 0.0625rem solid rgba(255, 255, 255, 0.75);
+  background-color: var(--tono);
+  opacity: 0.86;
+  transition: opacity 0.45s ease, box-shadow 0.45s ease;
+}
+
+/* Tonos de gris de las portadas (los mismos de Figma) */
+.vinilo--tono-1 { --tono: #C7C6C1; }
+.vinilo--tono-2 { --tono: #E3E2DE; }
+.vinilo--tono-3 { --tono: #CFCFCB; }
+.vinilo--tono-4 { --tono: #D9D8D3; }
+.vinilo--tono-5 { --tono: #D2D1CC; }
+.vinilo--tono-6 { --tono: #DCDCD8; }
+
+/* Ícono placeholder: rectángulo de 22 × 17.6 px con borde gris */
+.vinilo__icono {
+  width: 1.375rem;
+  height: 1.1rem;
+  border: 0.075rem solid var(--gris-topo);
+  border-radius: 0.125rem;
+}
+
+/* Texto "Portada": Lexend Light 11 px */
+.vinilo__portada-texto {
+  color: var(--gris-topo);
+  font-weight: 300;
+  font-size: 0.6875rem;
+}
+
+/* Nombre del proyecto: aparece a la derecha del vinilo activo.
+   width: 0 para que no ocupe espacio en la pila (el texto se desborda hacia la derecha).
+   El transform deshace la inclinación para que el texto se lea recto */
+.vinilo__nombre {
+  flex: none;
+  width: 0;
+  margin: 0 0 0 1.125rem;
+  color: var(--negro);
+  font-weight: 400;
+  font-size: 0.75rem;
+  letter-spacing: 0.045rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  transform: scaleY(1.02) skewX(-11deg) rotate(-11deg);
+  transition: opacity 0.45s ease;
+}
+
+/* --- Vinilo activo (hover, tap, foco o al detener el scroll) --- */
+
+/* Sale hacia la derecha */
+.vinilo:hover .vinilo__contenido,
+.vinilo.activo .vinilo__contenido,
+.vinilo:focus-visible .vinilo__contenido {
+  transform: translateX(var(--salida));
+}
+
+/* Portada opaca y con sombra */
+.vinilo:hover .vinilo__portada,
+.vinilo.activo .vinilo__portada,
+.vinilo:focus-visible .vinilo__portada {
+  opacity: 1;
+  box-shadow: 0 1.125rem 2.5rem rgba(0, 0, 0, 0.14);
+}
+
+/* Aparece el nombre */
+.vinilo:hover .vinilo__nombre,
+.vinilo.activo .vinilo__nombre,
+.vinilo:focus-visible .vinilo__nombre {
+  opacity: 1;
+}
+
+/* Si la persona pidió menos movimiento en su sistema, se quitan las animaciones */
+@media (prefers-reduced-motion: reduce) {
+  .vinilo__contenido,
+  .vinilo__portada,
+  .vinilo__nombre {
+    transition: none;
+  }
+}
+
+/* ==========================================
+   PANTALLAS MEDIANAS (1200 px = 75rem o menos)
+   ========================================== */
+@media (max-width: 75rem) {
+
+  /* La escena se achica, así que el texto también */
+  .sobre-mi__texto {
+    gap: 1rem;
+    font-size: 1.125rem;
+  }
+
+  .sobre-mi__cd p {
+    font-size: 1.125rem;
+  }
+}
+
+/* ==========================================
+   TABLET (1024 px = 64rem o menos)
+   ========================================== */
+@media (max-width: 64rem) {
+
+  /* La escena usa más ancho de la pantalla */
+  .sobre-mi__escena {
+    width: 92%;
+  }
+
+  .sobre-mi__texto {
+    gap: 0.75rem;
+    padding: 0.5rem 0.875rem;
+    font-size: 1rem;
+  }
+
+  .sobre-mi__cd p {
+    font-size: 1rem;
+  }
+
+  .proyectos {
+    padding-top: 4.5rem;
+  }
+
+  .proyectos__titulo {
+    padding-left: 2.25rem;
+    font-size: 2.125rem;
+  }
+
+  /* Carrusel al 75% del tamaño de desktop */
+  .carrusel {
+    --ancho: 12.875rem;
+    --alto: 17.375rem;
+    --paso-x: 4.6875rem;
+    --paso-y: 3.4219rem;
+    --salida: 7.78rem;
+    --ajuste-x: -16.78rem;
+    --ajuste-y: -15.66rem;
+    height: 37.5rem;
+  }
+}
+
+/* ==========================================
+   MOBILE (pantallas de 768 px = 48rem o menos)
+   ========================================== */
+@media (max-width: 48rem) {
+
+  /* Menos espacio arriba del menú en pantallas pequeñas */
+  .header {
+    padding-top: 2rem;
+  }
+
+  /* El menú usa el 90% del ancho para que no toque los bordes */
+  .nav__lista {
+    width: 90%;
+  }
+
+  /* Enlaces más pequeños (16 px = 1rem) para que quepan en una fila */
+  .nav__lista a {
+    font-size: 1rem;
+  }
+
+  /* Portada más baja y con menos relleno */
+  .portada {
+    min-height: 30rem;
+    padding-bottom: 4rem;
+  }
+
+  /* Logo más pequeño para que quepa en pantallas angostas */
+  .portada__titulo {
+    font-size: 3.5rem;
+  }
+
+  /* La "d" y la "p" se achican en la misma proporción */
+  .logo__serif {
+    font-size: 3.6rem;
+  }
+
+  /* Menos sangría en la segunda línea */
+  .logo__linea--segunda {
+    padding-left: 0.875rem;
+  }
+
+  /* Sobre mí: esquinas y separaciones más pequeñas */
+  .sobre-mi {
+    margin-top: -1.5rem;
+    padding: 1rem 0 1.25rem;
+    border-radius: 1.75rem 1.75rem 1rem 1rem;
+  }
+
+  .sobre-mi__escena {
+    width: 100%;
+    padding: 0.5rem;
+  }
+
+  /* En pantallas angostas el escenario es más alto, así el modelo se ve más grande */
+  .sobre-mi--3d .sobre-mi__disco {
+    aspect-ratio: 4 / 3;
+  }
+
+  /* El recuadro blanco crece un poco para que el texto quepa */
+  .sobre-mi__carcasa {
+    padding-left: 6%;
+  }
+
+  .sobre-mi__texto {
+    width: 90%;
+    height: 76%;
+    gap: 0.375rem;
+    padding: 0.375rem 0.5rem;
+    font-size: 0.6875rem;
+  }
+
+  .sobre-mi__cd p {
+    width: 80%;
+    font-size: 0.6875rem;
+  }
+
+  .proyectos {
+    padding-top: 3rem;
+  }
+
+  .proyectos__titulo {
+    margin-bottom: 1.5rem;
+    padding-left: 1.25rem;
+    font-size: 1.75rem;
+  }
+
+  /* Carrusel al ~52% del tamaño de desktop */
+  .carrusel {
+    --ancho: 8rem;
+    --alto: 10.8rem;
+    --paso-x: 2.9rem;
+    --paso-y: 2.125rem;
+    --salida: 4.25rem;
+    --ajuste-x: -9rem;
+    --ajuste-y: -8.5rem;
+    --foco-x: 0.3;
+    height: 24rem;
+  }
+
+  .vinilo__nombre {
+    margin-left: 0.5rem;
+    font-size: 0.5625rem;
+  }
+}
+
+/* ==========================================
+   MOBILE PEQUEÑO (480 px = 30rem o menos)
+   ========================================== */
+@media (max-width: 30rem) {
+
+  .sobre-mi__texto {
+    gap: 0.25rem;
+    font-size: 0.5625rem;
+  }
+
+  .sobre-mi__cd p {
+    font-size: 0.5625rem;
+  }
+}

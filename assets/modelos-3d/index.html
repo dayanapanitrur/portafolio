@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CD case 3D</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300..600&display=swap" rel="stylesheet">
+  <script type="importmap">
+    { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    } }
+  </script>
+  <style>
+    :root {
+      --bg: #efede8; --panel: #fbfaf7; --ink: #16161a; --muted: #6b6a66;
+      --line: #dcd9d2; --accent: #142BFF; --accent-ink: #fffefc;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body {
+      background: var(--bg); color: var(--ink);
+      font: 14px/1.45 ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", sans-serif;
+      display: grid; grid-template-columns: 1fr 340px; min-height: 100vh;
+    }
+    #stage { position: relative; min-height: 60vh; }
+    #cd { position: absolute; inset: 0; }
+    .hint {
+      position: absolute; left: 24px; bottom: 20px; pointer-events: none;
+      color: var(--muted); font-size: 13px; display: flex; gap: 8px; align-items: center;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); transition: background .2s; }
+    .dot.on { background: var(--accent); }
+    aside {
+      background: var(--panel); border-left: 1px solid var(--line);
+      padding: 22px 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px;
+    }
+    h1 { font-size: 16px; margin: 0; letter-spacing: -.01em; }
+    p.sub { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+    .tabs { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+    .tabs button { border: 0; background: none; padding: 8px 4px; font: inherit; font-size: 12.5px; cursor: pointer; color: var(--ink); }
+    .tabs button + button { border-left: 1px solid var(--line); }
+    .tabs button[aria-pressed="true"] { background: var(--ink); color: var(--panel); }
+    fieldset { border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+    legend { font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 6px; }
+    label { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; color: var(--muted); }
+    input[type=text], textarea {
+      font: inherit; color: var(--ink); background: #fff; border: 1px solid var(--line);
+      border-radius: 6px; padding: 7px 9px; resize: vertical;
+    }
+    .row { display: flex; gap: 10px; }
+    .row label { flex: 1; }
+    input[type=color] { width: 100%; height: 32px; border: 1px solid var(--line); border-radius: 6px; padding: 2px; background: #fff; }
+    .btn {
+      font: inherit; font-weight: 600; border-radius: 8px; padding: 9px 12px; cursor: pointer;
+      border: 1px solid var(--ink); background: var(--ink); color: var(--panel); text-align: center; text-decoration: none;
+    }
+    .btn.ghost { background: none; color: var(--ink); }
+    .btn.accent { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+    .file { position: relative; }
+    .file input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .meta { font-size: 12px; color: var(--muted); }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 0; width: 100%; }
+    .downloads { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
+    @media (max-width: 820px) {
+      body { grid-template-columns: 1fr; }
+      #stage { height: 70vh; }
+      aside { border-left: 0; border-top: 1px solid var(--line); padding: 20px 16px; }
+    }
+  </style>
+</head>
+<body>
+  <main id="stage">
+    <div id="cd"></div>
+    <div class="hint"><span class="dot" id="dot"></span><span id="hintText">Pasa el cursor sobre el case · arrastra para girar</span></div>
+  </main>
+
+  <aside>
+    <div>
+      <h1>CD jewel case · previsualización</h1>
+      <p class="sub">Modelo cargado desde <code>dist/cd-case.glb</code>. Prueba imágenes o texto en cada superficie.</p>
+    </div>
+
+    <div class="tabs" role="group" aria-label="Superficie">
+      <button data-k="cover" aria-pressed="true">Portada</button>
+      <button data-k="back">Contra</button>
+      <button data-k="spine">Lomo</button>
+      <button data-k="disc">CD</button>
+    </div>
+
+    <fieldset>
+      <legend>Imagen</legend>
+      <div class="file btn ghost">Subir imagen…<input type="file" id="file" accept="image/*"></div>
+      <span class="meta" id="sizeHint"></span>
+    </fieldset>
+
+    <hr>
+
+    <fieldset>
+      <legend>Texto</legend>
+      <label>Título<textarea id="txt" rows="2"></textarea></label>
+      <label>Texto secundario<textarea id="sub" rows="2"></textarea></label>
+      <div class="row">
+        <label>Fondo<input type="color" id="bg"></label>
+        <label>Texto<input type="color" id="fg"></label>
+      </div>
+      <button class="btn" id="applyText">Aplicar texto</button>
+    </fieldset>
+
+    <hr>
+
+    <div class="row">
+      <button class="btn ghost" id="toggle" style="flex:1">Abrir / cerrar</button>
+      <button class="btn ghost" id="view" style="flex:1">Ver por detrás</button>
+    </div>
+
+    <div class="downloads">
+      <a class="btn ghost" href="dist/cd-case.glb" download>Descargar GLB base (sin diseños)</a>
+      <button class="btn accent" id="export">Exportar GLB con estos diseños</button>
+      <span class="meta" id="status"></span>
+    </div>
+  </aside>
+
+  <script type="module">
+    import { mountCDCase, PRINTS } from './src/cd-case.js';
+    import { DISENOS } from './src/disenos.js';
+
+    // copia editable de los diseños finales (los cambios del panel no tocan disenos.js)
+    const state = structuredClone(DISENOS);
+
+    const $ = (id) => document.getElementById(id);
+    const cd = await mountCDCase($('cd'), {
+      url: './dist/cd-case.glb',
+      prints: state,
+      zoom: true,
+      onToggle: (open) => $('dot').classList.toggle('on', open),
+    });
+    window.cd = cd; // para depurar
+
+    let current = 'cover';
+    const fill = () => {
+      const s = state[current];
+      $('txt').value = s.text ?? '';
+      $('sub').value = s.sub ?? '';
+      $('bg').value = s.background ?? '#ffffff';
+      $('fg').value = s.color ?? '#111111';
+      const [w, h] = PRINTS[current].size, [pw, ph] = PRINTS[current].px;
+      $('sizeHint').textContent = `Proporción ${w} × ${h} mm · ideal ${pw} × ${ph} px (se recorta tipo "cover")`;
+      $('sub').closest('label').style.display = current === 'spine' ? 'none' : '';
+    };
+    document.querySelectorAll('.tabs button').forEach((b) => b.addEventListener('click', () => {
+      document.querySelectorAll('.tabs button').forEach((x) => x.setAttribute('aria-pressed', x === b));
+      current = b.dataset.k;
+      fill();
+    }));
+    fill();
+
+    $('applyText').addEventListener('click', async () => {
+      state[current] = { ...state[current], text: $('txt').value, sub: $('sub').value, background: $('bg').value, color: $('fg').value };
+      await cd.setPrint(current, state[current]);
+    });
+    $('file').addEventListener('change', async (e) => {
+      const f = e.target.files[0];
+      if (!f) return;
+      await cd.setPrint(current, f);
+      e.target.value = '';
+    });
+
+    $('toggle').addEventListener('click', () => { const v = !cd.hover.open; cd.setOpen(v); $('dot').classList.toggle('on', v); });
+    let behind = false;
+    $('view').addEventListener('click', () => {
+      behind = !behind;
+      cd.camera.position.set(behind ? -0.15 : 0.15, 0.09, behind ? -0.36 : 0.36); cd.fit();
+      $('view').textContent = behind ? 'Ver por delante' : 'Ver por detrás';
+    });
+
+    $('export').addEventListener('click', async () => {
+      $('status').textContent = 'Exportando…';
+      const buf = await cd.exportGLB();
+      const url = URL.createObjectURL(new Blob([buf], { type: 'model/gltf-binary' }));
+      Object.assign(document.createElement('a'), { href: url, download: 'cd-case-disenos.glb' }).click();
+      $('status').textContent = `Listo · ${(buf.byteLength / 1024 / 1024).toFixed(2)} MB`;
+      setTimeout(() => URL.revokeObjectURL(url), 5000);
+    });
+
+    if (matchMedia('(hover: none)').matches) $('hintText').textContent = 'Toca el case para abrirlo · arrastra para girar';
+  </script>
+</body>
+</html>

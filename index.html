@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portafolio de Dayana Pañitrur, diseñadora con mención industrial.">
+  <meta name="author" content="Dayana Pañitrur">
+  <title>Dayana Pañitrur — Portafolio</title>
+
+  <!-- Tipografías: Lexend (textos) y Pixelify Sans (logo y título de contacto) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Pixelify+Sans:wght@400;500&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/estilos.css">
+
+  <!-- three.js para el modelo 3D del CD (sección sobre mí) -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body class="pagina-inicio">
+
+  <!-- Fondo de la portada: azul que se "rasca" con el cursor y deja ver una foto (main.js) -->
+  <canvas class="fondo-pintura" aria-hidden="true"></canvas>
+
+  <header class="header">
+    <nav class="nav" aria-label="Navegación principal">
+      <ul class="nav__lista">
+        <li><a class="nav__enlace" href="#sobre-mi">sobre mí</a></li>
+        <li><a class="nav__enlace" href="#proyectos">proyectos</a></li>
+        <li><a class="nav__enlace" href="contacto.html">contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- PORTADA: logo sobre el fondo azul; al pasar el mouse el azul se "pinta" y deja ver la foto -->
+    <section class="portada" id="inicio" data-id="00" data-cursor="portada">
+      <h1 class="logo" aria-label="Dayana Pañitrur">
+        <span class="logo__linea">dayana</span>
+        <span class="logo__linea"> pañitrur</span>
+      </h1>
+    </section>
+
+    <!-- SOBRE MÍ: caja de CD en 3D. Se abre con hover (desktop) o con un toque (mobile) -->
+    <section class="sobre-mi" id="sobre-mi" data-id="01" data-cursor="sobre mí">
+      <div class="contenedor sobre-mi__contenedor">
+        <h2 class="titulo-seccion sobre-mi__titulo">Sobre mí</h2>
+
+        <div class="cd" id="cd-3d" data-cursor="cd" role="img" aria-label="Caja de CD en 3D con mi presentación en la portada y una foto mía en el disco">
+          <!-- Texto de respaldo: se ve solo si el modelo 3D no carga -->
+          <div class="cd__respaldo">
+            <p>Holaa :) soy Dayana, diseñadora con mención industrial.</p>
+            <p>Actualmente estoy expandiendo mi práctica hacia el diseño de interacción digital. Me motiva crear desde la inspiración del sonido hasta la experimentación visual y objetual.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROYECTOS: pila de vinilos. Hover (desktop) o toque (mobile) saca un vinilo;
+         con scroll o swipe la pila avanza en loop -->
+    <section class="proyectos" id="proyectos" data-id="02" data-cursor="proyectos">
+      <div class="contenedor">
+        <h2 class="titulo-seccion">Proyectos</h2>
+      </div>
+
+      <div class="carrusel">
+        <ul class="pila" aria-label="Proyectos">
+          <li class="vinilo" style="--i: 0">
+            <a class="vinilo__contenido" href="proyectos/banca-modular.html">
+              <span class="vinilo__portada">
+                <img src="img/proyectos/banca-modular.jpg" alt="Maqueta de madera de la Banca modular">
+              </span>
+              <span class="vinilo__nombre">Banca modular</span>
+            </a>
+          </li>
+          <li class="vinilo" style="--i: 1">
+            <a class="vinilo__contenido" href="proyectos/sin-te.html">
+              <span class="vinilo__portada">
+                <img src="img/proyectos/sin-te.jpg" alt="Sintetizador Sin_Te en su carcasa de acrílico y madera">
+              </span>
+              <span class="vinilo__nombre">Sin_Te</span>
+            </a>
+          </li>
+          <li class="vinilo" style="--i: 2">
+            <a class="vinilo__contenido" href="proyectos/mimus-thenca.html">
+              <span class="vinilo__portada">
+                <img src="img/proyectos/tenca.jpg" alt="Escultura en madera de la Tenca Chilena">
+              </span>
+              <span class="vinilo__nombre">Mimus thenca</span>
+            </a>
+          </li>
+          <li class="vinilo" style="--i: 3">
+            <a class="vinilo__contenido" href="proyectos/seq-01-y-seq-02.html">
+              <span class="vinilo__portada">
+                <img src="img/proyectos/secuenciadores.jpg" alt="Placas PCB de los secuenciadores SEQ-01 y SEQ-02">
+              </span>
+              <span class="vinilo__nombre">SEQ-01 y SEQ-02</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="js/main.js"></script>
+  <script type="module" src="js/sobre-mi.js"></script>
+</body>
+</html>

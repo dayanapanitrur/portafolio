@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portafolio de Dayana Pañitrur">
+  <meta name="author" content="Dayana Pañitrur">
+  <title>Dayana Pañitrur — Portafolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baskervville:ital@1&family=Pixelify+Sans&family=Lexend:wght@300;400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style-v01.css">
+</head>
+<body>
+
+  <header class="header">
+    <nav class="nav" aria-label="Navegación principal">
+      <ul class="nav__lista">
+        <li><a href="#sobre-mi">sobre mí</a></li>
+        <li><a href="#proyectos">proyectos</a></li>
+        <li><a href="#contacto">contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="portada" id="inicio">
+      <h1 class="portada__titulo" aria-label="Dayana Pañitrur">
+        <span class="logo__linea"><span class="logo__serif">d</span>ayana</span>
+        <span class="logo__linea logo__linea--segunda"><span class="logo__serif">p</span>añitrur</span>
+      </h1>
+    </section>
+
+    <!-- ==========================================
+         SOBRE MÍ: carcasa de cd + cd en 3D
+         El modelo (assets/modelos-3d) se dibuja dentro de .sobre-mi__modelo.
+         Los textos de abajo se "imprimen" sobre el modelo desde script-v01.js:
+         - .sobre-mi__texto → portada de la carcasa
+         - .sobre-mi__cd    → el disco
+         Si el 3D no carga, estos textos se muestran tal cual (respaldo).
+         ========================================== -->
+    <section class="sobre-mi" id="sobre-mi" aria-label="Sobre mí">
+      <div class="sobre-mi__escena">
+        <div class="sobre-mi__disco">
+
+          <!-- Aquí se monta el modelo 3D -->
+          <div class="sobre-mi__modelo" id="cd-3d"></div>
+
+          <!-- Lado izquierdo: la carcasa con el texto de presentación -->
+          <div class="sobre-mi__carcasa">
+            <div class="sobre-mi__texto">
+              <p>hola! soy dayana, diseñadora con mención industrial, explorando en el área de la interacción digital</p>
+              <p>hasta ahora he desarrollado proyectos que intersectan el sonido, lo material y lo visual</p>
+            </div>
+          </div>
+
+          <!-- Lado derecho: el cd con sus dos textos -->
+          <div class="sobre-mi__cd">
+            <p>dentro de este cd va una imagen mía</p>
+            <p>haciendo algo q me guste</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PROYECTOS: pila diagonal de vinilos
+         Al hacer scroll la pila avanza en loop; al detenerse sale el vinilo en foco.
+         En desktop el hover saca el vinilo; en mobile, el tap.
+         Clic (desktop) o segundo toque (mobile) abre la página del proyecto (data-url).
+         ========================================== -->
+    <section class="proyectos" id="proyectos">
+      <h2 class="proyectos__titulo">proyectos</h2>
+
+      <div class="carrusel">
+        <div class="carrusel__pila">
+
+          <article class="vinilo vinilo--tono-4" tabindex="0" data-url="proyectos/proyecto-01.html">
+            <div class="vinilo__contenido">
+              <div class="vinilo__portada">
+                <span class="vinilo__icono" aria-hidden="true"></span>
+                <span class="vinilo__portada-texto">Portada</span>
+              </div>
+              <h3 class="vinilo__nombre">Proyecto uno</h3>
+            </div>
+          </article>
+
+          <article class="vinilo vinilo--tono-3" tabindex="0" data-url="proyectos/proyecto-02.html">
+            <div class="vinilo__contenido">
+              <div class="vinilo__portada">
+                <span class="vinilo__icono" aria-hidden="true"></span>
+                <span class="vinilo__portada-texto">Portada</span>
+              </div>
+              <h3 class="vinilo__nombre">Proyecto dos</h3>
+            </div>
+          </article>
+
+          <article class="vinilo vinilo--tono-2" tabindex="0" data-url="proyectos/proyecto-03.html">
+            <div class="vinilo__contenido">
+              <div class="vinilo__portada">
+                <span class="vinilo__icono" aria-hidden="true"></span>
+                <span class="vinilo__portada-texto">Portada</span>
+              </div>
+              <h3 class="vinilo__nombre">Proyecto tres</h3>
+            </div>
+          </article>
+
+          <article class="vinilo vinilo--tono-1" tabindex="0" data-url="proyectos/proyecto-04.html">
+            <div class="vinilo__contenido">
+              <div class="vinilo__portada">
+                <span class="vinilo__icono" aria-hidden="true"></span>
+                <span class="vinilo__portada-texto">Portada</span>
+              </div>
+              <h3 class="vinilo__nombre">Proyecto cuatro</h3>
+            </div>
+          </article>
+
+          <article class="vinilo vinilo--tono-6" tabindex="0" data-url="proyectos/proyecto-05.html">
+            <div class="vinilo__contenido">
+              <div class="vinilo__portada">
+                <span class="vinilo__icono" aria-hidden="true"></span>
+                <span class="vinilo__portada-texto">Portada</span>
+              </div>
+              <h3 class="vinilo__nombre">Proyecto cinco</h3>
+            </div>
+          </article>
+
+          <article class="vinilo vinilo--tono-5" tabindex="0" data-url="proyectos/proyecto-06.html">
+            <div class="vinilo__contenido">
+              <div class="vinilo__portada">
+                <span class="vinilo__icono" aria-hidden="true"></span>
+                <span class="vinilo__portada-texto">Portada</span>
+              </div>
+              <h3 class="vinilo__nombre">Proyecto seis</h3>
+            </div>
+          </article>
+
+          <article class="vinilo vinilo--tono-4" tabindex="0" data-url="proyectos/proyecto-07.html">
+            <div class="vinilo__contenido">
+              <div class="vinilo__portada">
+                <span class="vinilo__icono" aria-hidden="true"></span>
+                <span class="vinilo__portada-texto">Portada</span>
+              </div>
+              <h3 class="vinilo__nombre">Proyecto siete</h3>
+            </div>
+          </article>
+
+          <article class="vinilo vinilo--tono-3" tabindex="0" data-url="proyectos/proyecto-08.html">
+            <div class="vinilo__contenido">
+              <div class="vinilo__portada">
+                <span class="vinilo__icono" aria-hidden="true"></span>
+                <span class="vinilo__portada-texto">Portada</span>
+              </div>
+              <h3 class="vinilo__nombre">Proyecto ocho</h3>
+            </div>
+          </article>
+
+          <article class="vinilo vinilo--tono-2" tabindex="0" data-url="proyectos/proyecto-09.html">
+            <div class="vinilo__contenido">
+              <div class="vinilo__portada">
+                <span class="vinilo__icono" aria-hidden="true"></span>
+                <span class="vinilo__portada-texto">Portada</span>
+              </div>
+              <h3 class="vinilo__nombre">Proyecto nueve</h3>
+            </div>
+          </article>
+
+          <article class="vinilo vinilo--tono-1" tabindex="0" data-url="proyectos/proyecto-10.html">
+            <div class="vinilo__contenido">
+              <div class="vinilo__portada">
+                <span class="vinilo__icono" aria-hidden="true"></span>
+                <span class="vinilo__portada-texto">Portada</span>
+              </div>
+              <h3 class="vinilo__nombre">Proyecto diez</h3>
+            </div>
+          </article>
+
+          <article class="vinilo vinilo--tono-6" tabindex="0" data-url="proyectos/proyecto-11.html">
+            <div class="vinilo__contenido">
+              <div class="vinilo__portada">
+                <span class="vinilo__icono" aria-hidden="true"></span>
+                <span class="vinilo__portada-texto">Portada</span>
+              </div>
+              <h3 class="vinilo__nombre">Proyecto once</h3>
+            </div>
+          </article>
+
+          <article class="vinilo vinilo--tono-5" tabindex="0" data-url="proyectos/proyecto-12.html">
+            <div class="vinilo__contenido">
+              <div class="vinilo__portada">
+                <span class="vinilo__icono" aria-hidden="true"></span>
+                <span class="vinilo__portada-texto">Portada</span>
+              </div>
+              <h3 class="vinilo__nombre">Proyecto doce</h3>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="contacto" id="contacto">
+    </section>
+
+  </main>
+
+  <!-- three.js (lo usa el modelo 3D del cd). El importmap tiene que ir antes del script -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script type="module" src="script-v01.js"></script>
+</body>
+</html>
